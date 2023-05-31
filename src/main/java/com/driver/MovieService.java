@@ -1,12 +1,15 @@
 package com.driver;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class MovieService {
 
-    MovieRepository movieRepository=new MovieRepository();
+    @Autowired
+    MovieRepository movieRepository;
     public void addMovie(Movie movie) {
         movieRepository.addMovie(movie);
     }
@@ -15,8 +18,8 @@ public class MovieService {
         movieRepository.addDirector(director);
     }
 
-    public void addMovieDirectorPair(String movie, String director) {
-        movieRepository.addMovieDirectorPair(movie,director);
+    public String addMovieDirectorPair(String movie, String director) {
+        return movieRepository.addMovieDirectorPair(movie,director);
     }
 
     public Movie getMovieByName(String name) {
@@ -29,7 +32,7 @@ public class MovieService {
         return movieRepository.getDirectorByName(name);
     }
 
-    public List<String> getMoviesByDirectorName(String name)
+    public List<Movie> getMoviesByDirectorName(String name)
     {
         return movieRepository.getMoviesByDirectorName(name);
     }
@@ -38,11 +41,13 @@ public class MovieService {
         return movieRepository.findAllMovies();
     }
 
-    public void deleteDirectorByName(String name) {
-        movieRepository.deleteDirectorByName(name);
+    public String deleteDirectorByName(String name) {
+
+        return movieRepository.deleteDirectorByName(name);
     }
 
-    public void deleteAllDirectors() {
-        movieRepository.deleteAllDirectors();
+    public String deleteAllDirectors() {
+
+        return movieRepository.deleteAllDirectors();
     }
 }

@@ -1,5 +1,6 @@
 package com.driver;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -7,9 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("movies")
+@RequestMapping("/movies")
 public class MovieController {
-    MovieService movieService=new MovieService();
+    @Autowired
+    MovieService movieService;
 
     @PostMapping("/add-movie")
     public ResponseEntity<String> addMovie (@RequestBody Movie movie){
@@ -23,14 +25,15 @@ public class MovieController {
     }
     @PutMapping("/add-movie-director-pair")
     public ResponseEntity<String> addMovieDirectorPair (@RequestParam String movie,@RequestParam String director){
+        //movieService.addMovieDirectorPair(movie,director);
         movieService.addMovieDirectorPair(movie,director);
         return new ResponseEntity<>(movie+" added with "+director, HttpStatus.ACCEPTED) ;
     }
 
     @GetMapping("/get-movie-by-name/{name}")
     public ResponseEntity<Movie> getMovieByName( @PathVariable String name){
-        Movie movie=null;
-        movie=movieService.getMovieByName(name);
+        //Movie movie=null;
+        Movie movie= movieService.getMovieByName(name);
         return new ResponseEntity<>(movie,HttpStatus.ACCEPTED);
     }
     @GetMapping("/get-director-by-name/{name}")
@@ -41,8 +44,8 @@ public class MovieController {
     }
 
     @GetMapping("/get-movies-by-director-name/{name}")
-    public ResponseEntity<List<String>> getMoviesByDirectorName(@PathVariable String name){
-        List<String >list=movieService.getMoviesByDirectorName(name);
+    public ResponseEntity<List<Movie>> getMoviesByDirectorName(@PathVariable String name){
+        List<Movie>list=movieService.getMoviesByDirectorName(name);
         return new ResponseEntity<>(list,HttpStatus.ACCEPTED);
     }
     @GetMapping("/get-all-movies")
