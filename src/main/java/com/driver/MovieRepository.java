@@ -65,8 +65,8 @@ public class MovieRepository {
         for(Map.Entry<String,String> entry : movieDirectorPair.entrySet()){
             if(entry.getValue().equals(name)){
                 String movieN = entry.getKey();
-                movieList.remove(name);
-                movieDirectorPair.remove(name);
+                movieList.remove(movieN);
+                movieDirectorPair.remove(movieN);
             }
         }
         return "delete director successfully";
